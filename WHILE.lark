@@ -5,7 +5,7 @@
 // Statements grammar
 ?stmt: simple_stmt | compound_stmt
 
-?compound_stmt: (if_stmt | while_stmt | funcdef) (";" stmt)*
+?compound_stmt: (if_stmt | while_stmt | funcdef | sequence) (";" stmt)*
 
 // Function grammar
 funcdef: "def" NAME "(" parameters? ")" "{" suite "}"
@@ -24,6 +24,9 @@ if_stmt: "if" ["("] test [")"] "then" suite  ["else" suite]
 while_stmt: "while" ["("] test [")"] "do" suite [";"]            -> simple_while
           | "while" ["("] test [")"] "do" "{" suite "}"        -> compound_while
 ?suite: stmt | _NEWLINE _INDENT stmt+ _DEDENT
+
+// sequence of assignments
+?sequence: "{" assign_expr (";" assign_expr)+ "}"
 
 // assignment, boolean, skip
 ?simple_stmt: small_stmt (";" stmt)*

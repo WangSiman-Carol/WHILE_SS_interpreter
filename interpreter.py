@@ -80,6 +80,11 @@ class Interpreter():
             self.interp(tree.children[0])
             self.interp(tree.children[1])
             return
+        # compound statement, specifically for sequence of assignments
+        elif op == "compound_stmt":
+            self.interp(tree.children[0])
+            self.interp(tree.children[1])
+            return
         # not
         elif op == "not":
             return 1 if not self.interp(tree.children[0]) else 0
@@ -135,6 +140,11 @@ class Interpreter():
             return _subscripts
         elif op == "subscript":
             return self.interp(tree.children[0])
+        # sequence of assignments
+        elif op == "sequence":
+            children_num = len(tree.children)
+            for i in range(children_num):
+                self.interp(tree.children[i])
 
 
     def compare(self, left, relation, right):
