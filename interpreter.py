@@ -161,6 +161,26 @@ class Interpreter():
         else:
             return 0
     
+    def print_tree(self, tree):
+        # print('in print_tree',tree)
+        output = ""
+        if tree.data == "if_stmt":
+            output += "if"
+            # print("tree.children",tree.children)
+            output += self.print_tree(tree.children[1])
+            output += self.print_tree(tree.children[2])
+        if tree.data == "assign":
+            # print('in assign')
+            # print(tree.children[0].children)
+            variable = tree.children[0].children[0]
+            value = self.interp(tree.children[1])
+            # print("variable",variable)
+            # print("value",value)
+            output += " " + variable + " := " + str(value)
+
+        # print(tree.children)
+        return output
+
     def print_Result(self):
         od = OrderedDict(sorted(self.state.items()))
         ans = ", ".join(str(var) + " → " + str(value) for var, value in od.items())
@@ -168,7 +188,6 @@ class Interpreter():
 
     def interpret(self, text):
         tree = self.parser.parse(text)
+        print(self.print_tree(tree))
         self.interp(tree)
         return self.print_Result()
-
-

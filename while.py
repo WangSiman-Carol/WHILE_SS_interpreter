@@ -8,12 +8,18 @@ from interpreter import *
 
 def main():
     try:
-        for text in sys.stdin:
-                while_parser = Lark.open('WHILE.lark', parser='lalr')
-                print(while_parser.parse(text))
-                interpreter = Interpreter(while_parser)
-                result = interpreter.interpret(text)
-                print(result, flush=True)              
+        text = "x := 1\n"
+        while_parser = Lark.open('WHILE.lark', parser='lalr')
+        # print(while_parser.parse(text))
+        interpreter = Interpreter(while_parser)
+        result = interpreter.interpret(text)
+        print(result, flush=True) 
+        # for text in sys.stdin:
+        #         while_parser = Lark.open('WHILE.lark', parser='lalr')
+        #         print(while_parser.parse(text))
+        #         interpreter = Interpreter(while_parser)
+        #         result = interpreter.interpret(text)
+        #         print(result, flush=True)              
     except OSError as err:
         print("OS error: {0}".format(err))
     except EOFError:
