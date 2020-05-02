@@ -355,7 +355,7 @@ class Interpreter():
 
     def interpret(self, text):
         tree = self.parser.parse(text)
-        print(tree.pretty())
+        # print(tree.pretty())
         # print("⇒",self.print_tree(tree))
 
         # a = Transformer()
@@ -366,7 +366,7 @@ class Interpreter():
 
 
         self.interp(tree)
-        # self.print_Results()
+        self.print_Results()
 
         
         return self.print_States()

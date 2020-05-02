@@ -8,7 +8,7 @@ from interpreter import *
 
 def main():
     try:
-        mode = 'dev' # test or dev
+        mode = 'test' # test or dev
 
         if mode == 'dev':
             text = "{ while true do x := x - 3 }\n"
