@@ -20,7 +20,7 @@ class Transformer(object):
             rhs = self.transform(tree.children[1])
             return "(" + lhs + self.mapping[op] + rhs + ")"
         elif op == "number":
-            return tree.children[0]
+            return str(int(tree.children[0]))
         elif op == "var":
             return tree.children[0]
         elif op == "not":
@@ -57,7 +57,10 @@ class Transformer(object):
             command_1 = self.transform(tree.children[1])
             command_2 = self.transform(tree.children[2])
             return "if " + cond + " then { " + command_1 + " } else { " + command_2 + " }"
-
+        elif op == "simple_stmt":
+            command_1 = self.transform(tree.children[0])
+            command_2 = self.transform(tree.children[1])
+            return command_1 + "; " + command_2
 # following codes only for debuggine
 # text = "{ a := 1 ; b := 2 }\n"
 # while_parser = Lark.open('WHILE.lark', parser='lalr')
