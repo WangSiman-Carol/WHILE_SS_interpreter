@@ -21,7 +21,6 @@ class Interpreter():
 
     def interp(self, tree):
         op = tree.data
-        # print("⇒",self.print_tree(tree))
 
         # Binary operations
         if op in {"add", "mul", "sub", "div", "power"}:
@@ -65,7 +64,6 @@ class Interpreter():
             # a = self.transformer.transform(tree)
 
             #check while loop times
-            # print('in simple',self.while_counter)
             if self.while_counter <= 9999/3-1:
                 self.while_counter += 1
             else:
@@ -73,6 +71,8 @@ class Interpreter():
                 self.result.append(temp_result)
                 return
             cond = self.interp(tree.children[0])
+
+        
             if cond == 1:
                 # ---------------------------------------------------------------------------------------
                 # while true: result = c ; command, state
@@ -84,19 +84,38 @@ class Interpreter():
                 temp_result = self.transformer.transform(tree.children[1]) + "; " + self.transformer.transform(tree) + ", " + self.print_States()
                 self.result.append(temp_result)
 
+                #mark before results
+                before_result_length = len(self.result)
+                
                 #Execute command
                 self.interp(tree.children[1])
 
-                #Get result after command 
-                modify_comm = self.result.pop()
-                # print('modify_comm',modify_comm)
+                for i in range(before_result_length,len(self.result)):
+                    modify_comm = self.result[i]
+                    length_modify = len(modify_comm.split(","))
+                    temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
+                    for j in range(1,length_modify):
+                        temp_result += ',' + modify_comm.split(",")[j]
+                    self.result[i] = temp_result
 
-                length_modify = len(modify_comm.split(","))
-                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
-                for i in range(1,length_modify):
-                    temp_result += ',' + modify_comm.split(",")[i]
+                ###################
+
+
+                # #Execute command
+                # self.interp(tree.children[1])
+
+                # #Get result after command 
+                # modify_comm = self.result.pop()
+
+                # length_modify = len(modify_comm.split(","))
+                # temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
+                # for i in range(1,length_modify):
+                #     temp_result += ',' + modify_comm.split(",")[i]
                     
-                self.result.append(temp_result)
+                # self.result.append(temp_result)
+
+
+                #################
 
                 #Manually make skip;while --> while
                 temp_result = self.transformer.transform(tree) + ", " + self.print_States()
@@ -120,7 +139,7 @@ class Interpreter():
                 self.interp(tree.children[1].children[1])
             else:
                 # temp_result = "skip, " + "next comm from trans, " + self.print_States()
-                temp_result = "skip, " + self.print_States()
+                temp_result = "skip, " + self.print_States() 
                 self.result.append(temp_result)
                 return
         elif op == "compound_while":
@@ -137,20 +156,20 @@ class Interpreter():
                 
                 temp_result = self.transformer.transform(tree.children[1]) + "; " + self.transformer.transform(tree) + ", " + self.print_States()
                 self.result.append(temp_result)
-
+                
+                #mark before results
+                before_result_length = len(self.result)
+                
                 #Execute command
                 self.interp(tree.children[1])
 
-                #Get result after command 
-                modify_comm = self.result.pop()
-                # print('modify_comm',modify_comm)
-
-                length_modify = len(modify_comm.split(","))
-                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
-                for i in range(1,length_modify):
-                    temp_result += ',' + modify_comm.split(",")[i]
-                    
-                self.result.append(temp_result)
+                for i in range(before_result_length,len(self.result)):
+                    modify_comm = self.result[i]
+                    length_modify = len(modify_comm.split(","))
+                    temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
+                    for j in range(1,length_modify):
+                        temp_result += ',' + modify_comm.split(",")[j]
+                    self.result[i] = temp_result
 
                 #Manually make skip;while --> while
                 temp_result = self.transformer.transform(tree) + ", " + self.print_States()
@@ -186,10 +205,7 @@ class Interpreter():
         elif op == "simple_stmt":
             # C1; C2
             # Change C1 --> C1; C2
-            # print("current commands 1",self.transformer.transform(tree.children[0]))
-            # print(tree.children[1].pretty())
-            # print("current commands 2",self.transformer.transform(tree.children[1]))
-
+        
             before_result_length = len(self.result)
             self.interp(tree.children[0])
             for i in range(before_result_length,len(self.result)):
@@ -205,9 +221,7 @@ class Interpreter():
             self.result.append(temp_result)
 
             self.interp(tree.children[1])
-            # print('after child 1')
-            # self.print_Results()
-            # print('after child 1 end')
+            
             return
         # compound statement, specifically for sequence of assignments
         elif op == "compound_stmt":
@@ -351,22 +365,13 @@ class Interpreter():
         for item in self.result:
             if item != " ,{}":
                 print("⇒",item)
-        # print(self.result)
 
     def interpret(self, text):
         tree = self.parser.parse(text)
         # print(tree.pretty())
-        # print("⇒",self.print_tree(tree))
-
-        # a = Transformer()
-        # print("tree", tree)
-        # print("-------------------------")
-        # print("yooo", a.transform(tree))
-
-
-
+ 
         self.interp(tree)
-        self.print_Results()
+        self.print_Results() 
 
         
         return self.print_States()
