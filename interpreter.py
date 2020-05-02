@@ -6,6 +6,7 @@
 ###############################################################################
 
 from collections import OrderedDict
+from ast_transformer import *
 
 class Interpreter():
     def __init__(self, parser):
@@ -13,6 +14,7 @@ class Interpreter():
         self.state = {}
         self.result = []
         self.while_counter = 0
+        self.transformer = Transformer()
         
 
     def interp(self, tree):
@@ -72,7 +74,8 @@ class Interpreter():
                 # self.result.append(temp_result)
                 # ---------------------------------------------------------------------------------------
                 #Get currect result
-                temp_result = "c from trans; " + "while from trans, " + self.print_States()
+                
+                temp_result = self.transformer.transform(tree.children[1]) + "; " + self.transformer.transform(tree) + ", " + self.print_States()
                 self.result.append(temp_result)
 
                 #Execute command
@@ -81,13 +84,13 @@ class Interpreter():
                 #Get result after command 
                 modify_comm = self.result.pop()
                 length_modify = len(modify_comm.split(","))
-                temp_result = modify_comm.split(",")[0] + ", while from trans"
+                temp_result = modify_comm.split(",")[0] + ", " + self.transformer.transform(tree)
                 for i in range(1,length_modify):
                     temp_result += modify_comm.split(",")[i]
                 self.result.append(temp_result)
 
                 #Manually make skip;while --> while
-                temp_result = "while from trans, " + self.print_States()
+                temp_result = self.transformer.transform(tree) + ", " + self.print_States()
                 self.result.append(temp_result)
 
 
@@ -101,11 +104,12 @@ class Interpreter():
                 
                 self.interp(tree.children[1].children[1])
             else:
-                temp_result = "skip, " + "next comm from trans, " + self.print_States()
+                # temp_result = "skip, " + "next comm from trans, " + self.print_States()
+                temp_result = "skip, " + self.print_States()
                 self.result.append(temp_result)
                 return
         elif op == "compound_while":
-            
+
             #check while loop times
             if self.while_counter <= 10000:
                 self.while_counter += 1
@@ -123,11 +127,12 @@ class Interpreter():
             children_num = len(tree.children)
             cond = self.interp(tree.children[0])
             if cond:
-                temp_result = 'C1 from trans, ' + self.print_States()
+                
+                temp_result = self.transformer.transform(tree.children[1]) + ", " + self.print_States()
                 self.result.append(temp_result)
                 self.interp(tree.children[1])
             elif not cond and children_num == 3:
-                temp_result = 'C2 from trans, ' + self.print_States()
+                temp_result = self.transformer.transform(tree.children[2]) + ", " + self.print_States()
                 self.result.append(temp_result)
                 self.interp(tree.children[2])
             return 
@@ -144,13 +149,13 @@ class Interpreter():
             for i in range(before_result_length,len(self.result)):
                 modify_comm = self.result[i]
                 length_modify = len(modify_comm.split(","))
-                temp_result = modify_comm.split(",")[0] + ", other comm from trans, "
+                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree.children[1])
                 for j in range(1,length_modify):
                     temp_result += modify_comm.split(",")[j]
                 self.result[i] = temp_result
 
             # manually print C2
-            temp_result = "other comm from trans, " + self.print_States()
+            temp_result = self.transformer.transform(tree.children[1]) + ", " + self.print_States()
             self.result.append(temp_result)
 
             self.interp(tree.children[1])
@@ -275,7 +280,17 @@ class Interpreter():
     def interpret(self, text):
         tree = self.parser.parse(text)
         # print("⇒",self.print_tree(tree))
+
+        # a = Transformer()
+        # print("tree", tree)
+        # print("-------------------------")
+        # print("yooo", a.transform(tree))
+
+
+
         self.interp(tree)
         self.print_Results()
+
+        
         return self.print_States()
 
