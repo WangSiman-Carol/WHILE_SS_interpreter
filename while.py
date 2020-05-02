@@ -9,6 +9,9 @@ from interpreter import *
 def main():
     try:
         text = "x := 1\n"
+        text = "z := 26 ; { a := 1 ; b := 2 ; c := 3 }\n"
+        text = "if true then x := 1 else x := 0\n"
+        text = "if ( 1 - 1 ) < 0 then z8 := 09 else z3 := 90\n"
         while_parser = Lark.open('WHILE.lark', parser='lalr')
         # print(while_parser.parse(text))
         interpreter = Interpreter(while_parser)
