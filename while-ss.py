@@ -8,10 +8,10 @@ from interpreter import *
 
 def main():
     try:
-        mode = 'dev' # test or dev
+        mode = 'test' # test or dev
 
         if mode == 'dev':
-            text = "if 3 < -3 then g := 3 + -2 else h := 09 + 90\n"
+            text = "while false do x := 1 ; if true then y := 1 else z := 1\n"
             while_parser = Lark.open('WHILE.lark', parser='lalr')
             interpreter = Interpreter(while_parser)
             result = interpreter.interpret(text)

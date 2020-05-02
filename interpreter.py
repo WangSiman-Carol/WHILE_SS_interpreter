@@ -60,6 +60,7 @@ class Interpreter():
             return self.compare(lhs, relation, rhs)
         # while statement
         elif op == "simple_while":
+            # a = self.transformer.transform(tree)
 
             #check while loop times
             if self.while_counter <= 10000:
@@ -104,7 +105,13 @@ class Interpreter():
                 # temp_result = "skip" + transformer(tree.children[1].children[1]) + self.print_States()
                 # self.result.append(temp_result)
                 # ---------------------------------------------------------------------------------------
-                
+                temp_result = "skip; " + self.transformer.transform(tree.children[1].children[1]) + ", " + self.print_States()
+                self.result.append(temp_result)
+
+                #Manually make skip;comm --> comm
+                temp_result = self.transformer.transform(tree.children[1].children[1]) + ", " + self.print_States()
+                self.result.append(temp_result)
+
                 self.interp(tree.children[1].children[1])
             else:
                 # temp_result = "skip, " + "next comm from trans, " + self.print_States()
@@ -228,6 +235,7 @@ class Interpreter():
             return self.interp(tree.children[0])
         # sequence of assignments
         elif op == "sequence":
+
             children_num = len(tree.children)
             for i in range(children_num):
                 
@@ -283,6 +291,7 @@ class Interpreter():
 
     def interpret(self, text):
         tree = self.parser.parse(text)
+        # print(tree.pretty())
         # print("⇒",self.print_tree(tree))
 
         # a = Transformer()
