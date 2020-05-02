@@ -1,7 +1,7 @@
 all:
 	pip3 install lark-parser
 	pip3 install pyinstaller
-	pyinstaller --onefile while.py
+	pyinstaller --onefile while-ss.py
 	mv dist/while-ss .
 	rm -fr build/
 	rm -fr dist/

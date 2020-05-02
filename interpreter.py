@@ -274,7 +274,8 @@ class Interpreter():
 
     def print_Results(self):
         for item in self.result:
-            print("⇒ ",item)
+            if item != " ,{}":
+                print("⇒",item)
         # print(self.result)
 
     def interpret(self, text):
