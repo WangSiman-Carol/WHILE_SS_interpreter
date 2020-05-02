@@ -83,10 +83,13 @@ class Interpreter():
 
                 #Get result after command 
                 modify_comm = self.result.pop()
+                # print('modify_comm',modify_comm)
+
                 length_modify = len(modify_comm.split(","))
-                temp_result = modify_comm.split(",")[0] + ", " + self.transformer.transform(tree)
+                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
                 for i in range(1,length_modify):
-                    temp_result += modify_comm.split(",")[i]
+                    temp_result += ',' + modify_comm.split(",")[i]
+                    
                 self.result.append(temp_result)
 
                 #Manually make skip;while --> while
@@ -151,7 +154,7 @@ class Interpreter():
                 length_modify = len(modify_comm.split(","))
                 temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree.children[1])
                 for j in range(1,length_modify):
-                    temp_result += modify_comm.split(",")[j]
+                    temp_result += ',' + modify_comm.split(",")[j]
                 self.result[i] = temp_result
 
             # manually print C2

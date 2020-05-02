@@ -8,14 +8,14 @@ from interpreter import *
 
 def main():
     try:
-        mode = 'test' # test or dev
+        mode = 'dev' # test or dev
 
         if mode == 'dev':
-            text = "skip\n"
+            text = "if 3 < -3 then g := 3 + -2 else h := 09 + 90\n"
             while_parser = Lark.open('WHILE.lark', parser='lalr')
             interpreter = Interpreter(while_parser)
             result = interpreter.interpret(text)
-            
+
         elif mode == 'test':
             for text in sys.stdin:
                     while_parser = Lark.open('WHILE.lark', parser='lalr')
