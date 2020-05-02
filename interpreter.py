@@ -128,10 +128,37 @@ class Interpreter():
 
             cond = self.interp(tree.children[0])
             if cond == 1:
+                #Get currect result
+                
+                temp_result = self.transformer.transform(tree.children[1]) + "; " + self.transformer.transform(tree) + ", " + self.print_States()
+                self.result.append(temp_result)
+
+                #Execute command
                 self.interp(tree.children[1])
+
+                #Get result after command 
+                modify_comm = self.result.pop()
+                # print('modify_comm',modify_comm)
+
+                length_modify = len(modify_comm.split(","))
+                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree)
+                for i in range(1,length_modify):
+                    temp_result += ',' + modify_comm.split(",")[i]
+                    
+                self.result.append(temp_result)
+
+                #Manually make skip;while --> while
+                temp_result = self.transformer.transform(tree) + ", " + self.print_States()
+                self.result.append(temp_result)
                 self.interp(tree)
             else:
+                temp_result = "skip, " + self.print_States()
+                self.result.append(temp_result)
                 return
+
+
+
+
         # if statement
         elif op == "if_stmt":
             children_num = len(tree.children)
@@ -154,6 +181,10 @@ class Interpreter():
         elif op == "simple_stmt":
             # C1; C2
             # Change C1 --> C1; C2
+            # print("current commands 1",self.transformer.transform(tree.children[0]))
+            # print(tree.children[1].pretty())
+            # print("current commands 2",self.transformer.transform(tree.children[1]))
+
             before_result_length = len(self.result)
             self.interp(tree.children[0])
             for i in range(before_result_length,len(self.result)):
@@ -175,7 +206,25 @@ class Interpreter():
             return
         # compound statement, specifically for sequence of assignments
         elif op == "compound_stmt":
+            #mark initial results
+            before_result_length = len(self.result)
+
+            #execute the command
             self.interp(tree.children[0])
+
+            #modify the reuslts
+            for i in range(before_result_length,len(self.result)):
+                modify_comm = self.result[i]
+                length_modify = len(modify_comm.split(","))
+                temp_result = modify_comm.split(",")[0] + "; " + self.transformer.transform(tree.children[1])
+                for j in range(1,length_modify):
+                    temp_result += ',' + modify_comm.split(",")[j]
+                self.result[i] = temp_result
+
+            # manually print C2
+            temp_result = self.transformer.transform(tree.children[1]) + ", " + self.print_States()
+            self.result.append(temp_result)
+
             self.interp(tree.children[1])
             return
         # not
@@ -235,11 +284,43 @@ class Interpreter():
             return self.interp(tree.children[0])
         # sequence of assignments
         elif op == "sequence":
-
             children_num = len(tree.children)
-            for i in range(children_num):
-                
+            
+            #process all the children except the last one
+            for i in range(children_num-1):
+
+                #find other comm
+                before_result_length = len(self.result)
+                other_comm_num = children_num - i - 1
+                other_comm_str = ""
+                for other_comm in range(other_comm_num):
+                    if other_comm == other_comm_num -1:
+                        other_comm_str += self.transformer.transform(tree.children[i+other_comm+1])
+                    else:
+                        other_comm_str += self.transformer.transform(tree.children[i+other_comm+1]) + "; "
+
+                # Execute current
                 self.interp(tree.children[i])
+
+                #Add other comm
+                for k in range(before_result_length,len(self.result)):
+                    modify_comm = self.result[k]
+                    length_modify = len(modify_comm.split(","))
+                    temp_result = modify_comm.split(",")[0] + "; " + other_comm_str
+                    for j in range(1,length_modify):
+                        temp_result += ',' + modify_comm.split(",")[j]
+                    self.result[k] = temp_result
+
+                # manually print C2
+                temp_result = other_comm_str + ", " + self.print_States()
+                self.result.append(temp_result)
+            
+            #process the last child
+            self.interp(tree.children[children_num-1])
+            
+
+
+                
 
 
     def compare(self, left, relation, right):
@@ -255,28 +336,6 @@ class Interpreter():
             return self.state[v]
         else:
             return 0
-    
-    def print_tree(self, tree):
-        output = ""
-        if tree.data == "if_stmt":
-            children_num = len(tree.children)
-            cond = self.interp(tree.children[0])
-            if cond:
-                self.interp(tree.children[1])
-                output += self.print_tree(tree.children[1])
-            elif not cond and children_num == 3:
-                self.interp(tree.children[2])
-                output += self.print_tree(tree.children[2])
-
-        if tree.data == "assign":
-            variable = tree.children[0].children[0]
-            value = self.interp(tree.children[1])
-            output += str(variable) + " := " + str(value)
-        if tree.data == "":
-            variable = tree.children[0].children[0]
-            value = self.interp(tree.children[1])
-
-        return output
 
     def print_States(self):
         od = OrderedDict(sorted(self.state.items()))
