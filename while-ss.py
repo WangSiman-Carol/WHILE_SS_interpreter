@@ -11,7 +11,7 @@ def main():
         mode = 'dev' # test or dev
 
         if mode == 'dev':
-            text = "i := 5 ; fact := 1 ; while 0 < i do { fact := fact * i ; i := i - 1 }\n"
+            text = "{ while true do x := x - 3 }\n"
             while_parser = Lark.open('WHILE.lark', parser='lalr')
             interpreter = Interpreter(while_parser)
             result = interpreter.interpret(text)

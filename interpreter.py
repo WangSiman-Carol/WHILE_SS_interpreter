@@ -7,7 +7,9 @@
 
 from collections import OrderedDict
 from ast_transformer import *
+import sys
 
+sys.setrecursionlimit(100020)
 class Interpreter():
     def __init__(self, parser):
         self.parser = parser
@@ -63,9 +65,12 @@ class Interpreter():
             # a = self.transformer.transform(tree)
 
             #check while loop times
-            if self.while_counter <= 10000:
+            # print('in simple',self.while_counter)
+            if self.while_counter <= 9999/3-1:
                 self.while_counter += 1
             else:
+                temp_result = self.transformer.transform(tree.children[1]) + "; " + self.transformer.transform(tree) + ", " + self.print_States()
+                self.result.append(temp_result)
                 return
             cond = self.interp(tree.children[0])
             if cond == 1:
@@ -350,7 +355,7 @@ class Interpreter():
 
     def interpret(self, text):
         tree = self.parser.parse(text)
-        # print(tree.pretty())
+        print(tree.pretty())
         # print("⇒",self.print_tree(tree))
 
         # a = Transformer()
@@ -361,7 +366,7 @@ class Interpreter():
 
 
         self.interp(tree)
-        self.print_Results()
+        # self.print_Results()
 
         
         return self.print_States()
