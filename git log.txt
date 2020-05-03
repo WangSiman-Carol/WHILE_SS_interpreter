@@ -1,0 +1,130 @@
+$ git log
+commit 1097d164db8bb78b34c417c3ce18f14b66693375 (HEAD -> mike, origin/mike)
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 16:53:43 2020 -0700
+
+    done
+
+commit aaa7d2e168079b5d0e298f3ccd2f050c0a93a249
+Merge: 24b1fc2 c2a849c
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 15:56:55 2020 -0700
+
+    Merge branch 'master' of https://github.com/WangSiman-Carol/WHILE_SS_interpreter into mike
+    merge
+
+commit 24b1fc2cdae64fe195e0bf85547c5bbab948dfd9
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 15:52:42 2020 -0700
+
+    before merge
+
+commit c2a849c0b389528e05f7c191761c985078637ea7
+Author: Siman <wangsiman-carol@outlook.com>
+Date:   Sat May 2 15:43:34 2020 -0700
+
+    fixed bugs
+
+commit 3d765e1bfe0955cd7643b3117a54fceeee77df12
+Author: Siman <wangsiman-carol@outlook.com>
+Date:   Sat May 2 15:41:52 2020 -0700
+
+    fixed bugs
+
+commit 29888a85acc8adfc392ac04509b0f7847558e811
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 14:07:04 2020 -0700
+
+    some clean up
+
+commit 0810663682da1a2df2a1a41af4a9d9f231f54a07
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 14:00:08 2020 -0700
+
+    get infinite loop works?
+
+commit 911b1e48d6c76e7de938882012720c8ba9b05855
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 13:37:00 2020 -0700
+
+    8 fails
+
+commit ebdfe51a797a99c038e0e92eba961d58bed19b0a
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 11:12:38 2020 -0700
+
+    11 fail
+
+commit 7bb4109d9974caabc3e2d0f07716c730b1e8b457
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 10:39:07 2020 -0700
+
+    13 failures
+
+commit 4e3cc13f8db2c2782d3b6d1bc1c0a7114e015f6b
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 09:56:37 2020 -0700
+
+    bug fix 1: 19 failures
+
+commit cfb1b8fd2d180fdc24dc026a0b8cee65aaa39bb6
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 00:06:31 2020 -0700
+
+    oh wwe have bugs, great fix it tomorrow
+
+commit 2367016608884119fc8f6a3e67d15ffef29f7876
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Sat May 2 00:05:15 2020 -0700
+
+    oh wwe have bugs, great fix it tomorrow
+
+commit e383b2582d593a2f1322c0fc90e11a88a261b639
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Fri May 1 23:47:02 2020 -0700
+
+    version 1done?
+
+commit 19e2d1eebedb18ebec1b8b8eda0eca2c8d7f592b
+Merge: 9ec6b3f 005405b
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Fri May 1 23:16:58 2020 -0700
+
+    Merge branch 'lmh_dev' of https://github.com/WangSiman-Carol/WHILE_SS_interpreter into mike
+    merge
+
+commit 9ec6b3fedffcb1fc0d82764082f36d3e32c9e5ae
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Fri May 1 23:05:40 2020 -0700
+
+    edit small step interp
+
+commit 005405be064f10973a56884481255722058f8fd3
+Author: Siman <wangsiman-carol@outlook.com>
+Date:   Fri May 1 22:20:37 2020 -0700
+
+    added new feature
+
+commit a37eee548cbea16730e49ee2a4e1dd11fbd1b0ca
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Fri May 1 17:48:29 2020 -0700
+
+    test
+
+commit d81f32127c385b7f5e99a7a46d4a4f26328758bf
+Author: mikelmh025 <38229852+mikelmh025@users.noreply.github.com>
+Date:   Thu Apr 30 23:30:53 2020 -0700
+
+    test of push
+
+commit 6e02941c1fa120f10ad61f0a120c5ae89dd2787a
+Author: Siman <wangsiman-carol@outlook.com>
+Date:   Thu Apr 30 23:08:27 2020 -0700
+
+    Updated grammar for WHILE Small Step
+
+commit 6e65b30512c48335ae5a014c3b20db03a7924bc9
+Author: Siman <wangsiman-carol@outlook.com>
+Date:   Tue Apr 28 09:22:19 2020 -0700
+
+    initial commit

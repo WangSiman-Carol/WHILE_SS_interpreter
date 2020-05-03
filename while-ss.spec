@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['while-ss.py'],
-             pathex=['/Users/minghaoliu/Desktop/CSE210A/WHILE_SS_interpreter'],
+             pathex=['/Users/minghaoliu/Desktop/CSE210A/submission/WHILE_SS_interpreter'],
              binaries=[],
              datas=[],
              hiddenimports=[],
