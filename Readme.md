@@ -1,3 +1,7 @@
+Authors:
+Siman Wang (swang324@ucsc.edu), Minghao Liu (mliu40@ucsc.edu)
+
+
 ### requirements
 Python 3.77
 
